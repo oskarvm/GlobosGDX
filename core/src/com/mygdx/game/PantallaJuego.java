@@ -1,7 +1,21 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+class Globo {
+    int posX, posY, speed, size;
+
+    public Globo(int posX, int posY, int speed, int size) {
+        this.posX = posX;
+        this.posY = posY;
+        this.speed = speed;
+        this.size = size;
+    }
+}
 
 public class PantallaJuego extends BaseScreen {
 
@@ -10,38 +24,40 @@ public class PantallaJuego extends BaseScreen {
     }
 
     SpriteBatch spriteBatch;
-    Texture background, ballonRed, ballonGreen, ballonBlue;
+    Texture background_sky, globoRojo, globoVerde, globoAzul, globoAmarillo, globoNaranja, globoLila;
+    private int posicionX;
+    private int posicionY;
+    int numerodeclick;
+    BitmapFont bitmapFont;
 
     @Override
     public void show() {
         spriteBatch = new SpriteBatch();
+        bitmapFont = new BitmapFont();
 
-        background = new Texture("background.png");
-        ballonRed = new Texture("ballon_red.png");
-        ballonGreen = new Texture("ballon_green.png");
-        ballonBlue = new Texture("ballon_blue.png");
+        background_sky = new Texture("sky_background.png");
+        globoRojo = new Texture("globo_rojo.png");
+        globoVerde = new Texture("globo_verde.png");
+        globoAzul = new Texture("globo_azul.png");
+        globoAmarillo = new Texture("globo_amarillo.png");
+        globoNaranja = new Texture("globo_naranja.png");
+        globoLila = new Texture("globo_lila.png");
+
     }
 
     @Override
     public void render(float delta) {
         spriteBatch.begin();
+        spriteBatch.draw(background_sky, 0, 0, 640, 480);
+        spriteBatch.draw(globoVerde, posicionX, posicionY, 40, 40);
 
-        spriteBatch.draw(background, 0, 0, 640, 480);
+        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
+            numerodeclick++;
+        }
 
-        spriteBatch.draw(ballonRed, 60, 60);
-        spriteBatch.draw(ballonGreen, 120, 160);
-        spriteBatch.draw(ballonBlue, 160, 260);
-
-
-        spriteBatch.draw(ballonRed, 360, 60, 100, 100);
-        spriteBatch.draw(ballonRed, 0, 0, 100, 100);
-
-        spriteBatch.draw(ballonGreen, 30, 10, 20, 20);
-
-
-        spriteBatch.draw(ballonGreen, 460, 160, 80, 80);
-        spriteBatch.draw(ballonBlue, 260, 260, 140, 140);
-
+        posicionX++;
+        bitmapFont.draw(spriteBatch, "clicks" + numerodeclick, 30, 70);
         spriteBatch.end();
     }
 }
+

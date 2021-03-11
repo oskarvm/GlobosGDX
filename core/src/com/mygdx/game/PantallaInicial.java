@@ -7,6 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class PantallaInicial extends BaseScreen {
+
+
     public PantallaInicial(GoblosGDX game) {
         super(game);
     }
