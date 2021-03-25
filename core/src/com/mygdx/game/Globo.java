@@ -6,8 +6,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.util.Random;
 
 class Globo {
-    Texture textura;
 
+    float gameTime;
+    float alarmTime;
+    float alarmDuration = 0.5f;
+    Texture textura;
+    boolean eliminar = false;
+    String colorglobo;
     static Texture globoAmarillo = new Texture("globo_amarillo.png");
     static Texture globoAzul = new Texture("globo_azul.png");
     static Texture globoLila = new Texture("globo_lila.png");
@@ -16,44 +21,75 @@ class Globo {
     static Texture globoVerde = new Texture("globo_verde.png");
     float posX, posY, speedX, speedY, size;
 
-    public Globo(){
+
+    public Globo(int nivel){
         Random random = new Random();
 
         int color = random.nextInt(6);
-        System.out.println(color);
         if (color == 0){
             this.textura = globoAmarillo;
+            colorglobo = "Amarillo";
         }else if (color==1){
             this.textura = globoAzul;
+            colorglobo = "Azul";
         }else if (color==2){
             this.textura = globoLila;
+            colorglobo = "Lila";
         }else if (color==3){
             this.textura = globoNaranja;
+            colorglobo = "Naranja";
         }else if (color==4){
             this.textura = globoRojo;
-        }else if (color==5){
+            colorglobo = "Rojo";
+        }else {
             this.textura = globoVerde;
+            colorglobo = "Verde";
         }
 
         this.posX = random.nextInt(610)+5;
         this.posY = random.nextInt(10)+5;
-        this.speedX = 10f;
-        this.speedY = random.nextInt(30)+10;
+        this.speedX = random.nextInt(60)-30;
         this.size =  random.nextInt(20)+50;
+
+        if (nivel > 100){
+            this.speedY = random.nextInt(120) + 100;
+        }
+        else if(nivel > 75){
+            this.speedY = random.nextInt(100) + 80;
+        }
+        else if(nivel > 50){
+            this.speedY = random.nextInt(80) + 60;
+        }
+        else if(nivel > 25){
+            this.speedY = random.nextInt(60) + 40;
+        }
+        else if(nivel > 10){
+            this.speedY = random.nextInt(40) + 20;
+        }
+        else {
+            this.speedY = random.nextInt(30) + 10;
+        }
     }
 
     public void update(float delta) {
+        Random random = new Random();
 
         posX += speedX * delta;
         posY += speedY * delta;
 
-        for(int i = 0; i < 3; i++) {
-            speedX -= 10f;
+
+        // cuando la alarma suene, poner una speedX random
+        gameTime += delta;
+        if(gameTime > alarmTime){
+            alarmTime = gameTime + alarmDuration;
+            speedX = random.nextInt(60)-30;
         }
+
     }
 
     public void render(SpriteBatch spriteBatch) {
         spriteBatch.draw(textura, posX, posY, size , size);
     }
+
 
 }
