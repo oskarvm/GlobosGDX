@@ -21,7 +21,7 @@ public class PantallaJuego extends BaseScreen {
     Texture background_sky;
     int contador = 0;
     BitmapFont bitmapFont;
-    private int fallos = 0;
+    private int fallos = 20;
     List<Globo> listaGlobos = new ArrayList<>();
     float gameTime;
     float alarmTime;
@@ -64,11 +64,10 @@ public class PantallaJuego extends BaseScreen {
                         if(globo.colorglobo.equals(colorTexto)) {
                             contador++;
                         } else {
-                            fallos++;
+                            fallos--;
                         }
-
+                        break;
                     }
-                break;
                 }
 
         }
@@ -82,22 +81,22 @@ public class PantallaJuego extends BaseScreen {
             cambioColorTexto();
             alarmColor = gameColor + alarmDurationColor;
             if (contador > 100){
-                alarmDurationColor = 3;
+                alarmDurationColor = 1;
             }
             else if(contador > 75){
-                alarmDurationColor = 4;
+                alarmDurationColor = 2;
             }
             else if(contador > 50){
-                alarmDurationColor = 5;
+                alarmDurationColor = 3;
             }
             else if(contador > 25){
-                alarmDurationColor = 6;
+                alarmDurationColor = 4;
             }
             else if(contador > 10){
-                alarmDurationColor = 7;
+                alarmDurationColor = 5;
             }
             else {
-                alarmDurationColor = 8;
+                alarmDurationColor = 6;
             }
         }
 
@@ -105,22 +104,22 @@ public class PantallaJuego extends BaseScreen {
             alarmTime = gameTime + alarmDuration;
             listaGlobos.add(new Globo(contador));
             if (contador > 100){
-                alarmDuration = 0.5f;
+                alarmDuration = 0.05f;
             }
             else if(contador > 75){
-                alarmDuration = 0.6f;
+                alarmDuration = 0.1f;
             }
             else if(contador > 50){
-                alarmDuration = 0.7f;
+                alarmDuration = 0.2f;
             }
             else if(contador > 25){
-                alarmDuration = 0.8f;
+                alarmDuration = 0.3f;
             }
             else if(contador > 10){
-                alarmDuration = 0.9f;
+                alarmDuration = 0.4f;
             }
             else {
-                alarmDuration = 1;
+                alarmDuration = 0.5f;
             }
         }
 
@@ -146,13 +145,13 @@ public class PantallaJuego extends BaseScreen {
             }
         }
 
-        if(fallos == 5){
+        if(fallos == 0){
             setScreen(new PantallaFinal(game, contador));
         }
 
         bitmapFont.setColor(Color.BLACK);
         bitmapFont.draw(spriteBatch, "Puntos: " + contador, 8, 30);
-        bitmapFont.draw(spriteBatch, "Fallos: " + fallos, 350, 30);
+        bitmapFont.draw(spriteBatch, "Vidas: " + fallos, 350, 30);
 
         bitmapFont.setColor(colorelegido);
         bitmapFont.draw(spriteBatch, "Color: " + colorTexto, 545, 30);
